@@ -1,7 +1,7 @@
 import gradio as gr
 from fastai.vision.all import *
 
-learn = load_learner('export.pkl')
+learn = load_learner('export.pkl', cpu=True)
 
 categories = learn.dls.vocab
 def classify_images(img):
@@ -21,4 +21,6 @@ intf = gr.Interface(
 )
 
 if __name__ == "__main__":
-    intf.launch(server_name="0.0.0.0", server_port=7680)
+    import os
+    port = int(os.environ.get("PORT", 10000))
+    intf.launch(server_name="0.0.0.0", server_port=port)
